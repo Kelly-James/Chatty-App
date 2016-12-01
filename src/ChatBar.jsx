@@ -26,13 +26,14 @@ class ChatBar extends Component {
   }
 
   handleNameInput(event) {
-    // const keycode = event.keycode || event.which;
-    // if(keycode == 13) {
+    const keycode = event.keycode || event.which;
+    if(keycode == 13) {
       this.setState({
         type: 'postNotification',
         username: event.target.value
+        // content: ''
       });
-    // }
+    }
   }
 
   render() {
@@ -42,6 +43,7 @@ class ChatBar extends Component {
           id="username"
           type="text"
           onChange={this.handleNameInput.bind(this)}
+          onBlur={this.handleNameInput.bind(this)}
           placeholder="Enter Username (Optional)"
         />
         <input

@@ -15,8 +15,12 @@ class App extends Component {
     };
   }
 
-  addMessage(username, content) {
-    this.sendText(username, content);
+  addMessage(type, username, content) {
+    this.sendText(type, username, content);
+  }
+
+  addNote(type, username, content) {
+    this.sendText(type, username, content);
   }
 
   componentDidMount() {
@@ -54,6 +58,7 @@ class App extends Component {
         <MessageList messages={this.state.messages}/>
 
         <ChatBar addMessage  ={this.addMessage.bind(this)}
+                 addNote     ={this.addNote.bind(this)}
                  currentUser ={this.state.currentUser.name}/>
 
       </div>
