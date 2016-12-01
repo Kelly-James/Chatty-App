@@ -5,7 +5,6 @@ class ChatBar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      type: '',
       username: '',
       content: ''
     };
@@ -19,20 +18,15 @@ class ChatBar extends Component {
       this.setState({content: ''});
     } else {
       this.setState({
-        type: 'postMessage',
         content: event.target.value
       });
     }
   }
 
   handleNameInput(event) {
-    // const keycode = event.keycode || event.which;
-    // if(keycode == 13) {
       this.setState({
-        type: 'postNotification',
         username: event.target.value
       });
-    // }
   }
 
   render() {

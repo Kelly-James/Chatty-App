@@ -11,7 +11,6 @@ class App extends Component {
           name: this.props.username ? this.props.username : "Anonymous"
         },
         messages: [],
-        notes: [],
     };
   }
 
@@ -30,9 +29,8 @@ class App extends Component {
     }
   }
 
-  sendText(type, username, content) {
+  sendText(username, content) {
     let msg = {
-        type,
         username,
         content
       }
