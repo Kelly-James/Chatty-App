@@ -24,9 +24,9 @@ class ChatBar extends Component {
   }
 
   handleNameInput(event) {
-      this.setState({
-        username: event.target.value
-      });
+    this.setState({
+      username: event.target.value
+    });
   }
 
   render() {
