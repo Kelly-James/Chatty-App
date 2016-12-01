@@ -26,14 +26,11 @@ class ChatBar extends Component {
   }
 
   handleNameInput(event) {
-    const keycode = event.keycode || event.which;
-    if(keycode == 13) {
-      this.setState({
-        type: 'postNotification',
-        username: event.target.value
-        // content: ''
-      });
-    }
+    this.setState({
+      type: 'postNotification',
+      username: event.target.value
+      // content: this.state.username + ' changed their name'
+    });
   }
 
   render() {
@@ -42,6 +39,7 @@ class ChatBar extends Component {
         <input
           id="username"
           type="text"
+          autoFocus={true}
           onChange={this.handleNameInput.bind(this)}
           onBlur={this.handleNameInput.bind(this)}
           placeholder="Enter Username (Optional)"
