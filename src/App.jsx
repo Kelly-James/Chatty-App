@@ -21,6 +21,7 @@ class App extends Component {
 
     this.socket.onmessage = (event) => {
       let message = JSON.parse(event.data);
+      
       console.log('message: ', message);
       let newMessages = this.state.messages.concat([message]);
       this.setState({messages: newMessages});
