@@ -8,19 +8,10 @@ class App extends Component {
     super(props);
     this.state = {
         currentUser: {
-          name: this.props.username ? this.props.username : "Anonymous"
+          name: null
         },
         messages: [],
-        notes: [],
     };
-  }
-
-  addMessage(type, username, content) {
-    this.sendText(type, username, content);
-  }
-
-  addNote(type, username, content) {
-    this.sendText(type, username, content);
   }
 
   componentDidMount() {
@@ -29,9 +20,25 @@ class App extends Component {
 
     this.socket.onmessage = (event) => {
       let message = JSON.parse(event.data);
+      console.log('message: ', message);
       let newMessages = this.state.messages.concat([message]);
       this.setState({messages: newMessages});
     }
+  }
+
+  addMessage(content) {
+    this.sendText('postMessage', this.state.currentUser.name, content);
+  }
+
+  addNote(content) {
+    this.sendText('postNotification', null, content);
+  }
+
+  changeUsername(username) {
+    let oldUsername = this.state.currentUser.name ? this.state.currentUser.name : 'Anonymous';
+    let newUsername = username ? username : 'Anonymous';
+    this.setState({currentUser: {name: newUsername}});
+    this.addNote(`${oldUsername} changed their name to ${newUsername}`)
   }
 
   sendText(type, username, content) {
@@ -51,15 +58,12 @@ class App extends Component {
           <h1>CHATTY</h1>
         </nav>
 
-        <div className="message system">
-          CatLife changed their name to Astronaut.
-        </div>
+        <MessageList messages    ={this.state.messages}/>
 
-        <MessageList messages={this.state.messages}/>
-
-        <ChatBar addMessage  ={this.addMessage.bind(this)}
-                 addNote     ={this.addNote.bind(this)}
-                 currentUser ={this.state.currentUser.name}/>
+        <ChatBar addMessage      ={this.addMessage.bind(this)}
+                 addNote         ={this.addNote.bind(this)}
+                 changeUsername  ={this.changeUsername.bind(this)}
+                 currentUserName ={this.state.currentUser.name}/>
 
       </div>
     );

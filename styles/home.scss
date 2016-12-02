@@ -20,8 +20,6 @@ html, body {
     #message-list {
       height: calc(100vh - 131px);
       padding: 16px 8px;
-      display: block;
-      width: 60%;
     }
     #message-list .message {
       display: flex;
@@ -40,15 +38,9 @@ html, body {
     #message-list .message .content {
       flex: 85;
     }
-    .message.system {
+    #message-list .message.system {
       font-style: italic;
       font-weight: 400;
-      display: block;
-      width: 40%;
-      float: right;
-      height: calc(100vh - 131px);
-      padding: 16px 8px;
-      border-left: 1px solid black;
     }
     footer {
       height: 41px;
