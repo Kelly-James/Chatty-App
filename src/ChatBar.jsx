@@ -5,7 +5,7 @@ class ChatBar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: '',
+      username: props.currentUserName,
       content: ''
     };
   }
@@ -13,9 +13,10 @@ class ChatBar extends Component {
   handleSubmit(event) {
     const keycode = event.keycode || event.which;
     if(keycode == 13) {
-      let userForMessage = this.state.username || this.props.currentUser;
-      this.props.addMessage(userForMessage, this.state.content);
-      this.setState({content: ''});
+      this.props.addMessage(this.state.content);
+      this.setState({
+        content: ''
+      });
     } else {
       this.setState({
         content: event.target.value
@@ -24,9 +25,22 @@ class ChatBar extends Component {
   }
 
   handleNameInput(event) {
-    this.setState({
-      username: event.target.value
-    });
+    const keycode = event.keycode || event.which;
+    if(keycode == 13) {
+      this.handleNameSubmit(event);
+      this.props.addNote(this.state.content);
+      this.contentInput.focus();
+    };
+  }
+
+  handleNameSubmit(event) {
+    if(this.props.currentUserName !== event.target.value) {
+      this.props.changeUsername(this.state.username);
+    }
+  }
+
+  handleUsernameBox(event) {
+    this.setState({username: event.target.value})
   }
 
   render() {
@@ -35,12 +49,17 @@ class ChatBar extends Component {
         <input
           id="username"
           type="text"
-          onChange={this.handleNameInput.bind(this)}
+          autoFocus={true}
+          value={this.state.username}
+          onChange={this.handleUsernameBox.bind(this)}
+          onBlur={this.handleNameSubmit.bind(this)}
+          onKeyDown={this.handleNameInput.bind(this)}
           placeholder="Enter Username (Optional)"
         />
         <input
           id="content"
           type="text"
+          ref={(input) => { this.contentInput = input; }}
           value={this.state.content}
           onChange={this.handleSubmit.bind(this)}
           onKeyDown={this.handleSubmit.bind(this)}
