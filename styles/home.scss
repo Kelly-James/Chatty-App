@@ -17,6 +17,15 @@ html, body {
     nav h1 {
       margin: 0;
     }
+    nav p {
+      font-weight: 700;
+      line-height: 40px;
+      margin: 0;
+      padding: 10px;
+      position: fixed;
+      right: 0;
+      top: 0;
+    }
     #message-list {
       height: calc(100vh - 131px);
       padding: 16px 8px;

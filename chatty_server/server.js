@@ -21,22 +21,6 @@ wss.on('connection', (ws) => {
 
   console.log('Client connected');
 
-  // let clientsOnline = {
-  //                     type       : 'clientCount',
-  //                     clientCount: wss.clients.length
-  //                   };
-
-  // console.log('Clients Online: ', wss.clients.length);
-  //
-  // wss.broadcast(clientsOnline);
-
-  // let clientsOnlineString = JSON.stringify(clientsOnline);
-
-  // wss.clients.forEach((client) => {
-  //   client.send(clientsOnlineString);
-  // });
-
-
   ws.on('message', ((msg) => {
     let message = JSON.parse(msg);
     console.log('Incoming: ', message);
@@ -57,18 +41,11 @@ wss.on('connection', (ws) => {
                   };
     }
     if(message.type === 'clientConnect') {
-      console.log('Made it there! ');
       newMessage = {
-                    type   : 'clientCount',
-                    content: wss.clients.length
+                    type       : 'clientCount',
+                    usersOnline: wss.clients.length
                   };
     }
-
-    // newMessage = JSON.stringify(newMessage);
-
-    // wss.clients.forEach((client) => {
-    //   client.send(newMessage);
-    // });
 
     wss.broadcast(newMessage);
 
@@ -76,8 +53,11 @@ wss.on('connection', (ws) => {
 
   ws.on('close', () => {
     console.log('Client disconnected');
-    // console.log('Clients Online: ', clientCounter);
-    // wss.broadcast(clientsOnline);
+    let clientsOnline = {
+                         type       : 'clientConnect',
+                         usersOnline: wss.clients.length
+                       };
+    wss.broadcast(clientsOnline);
   });
 
 });

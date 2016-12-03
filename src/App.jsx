@@ -26,10 +26,14 @@ class App extends Component {
 
       this.socket.onmessage = (event) => {
         let data = JSON.parse(event.data);
-        // let clientCount = ;
         console.log('data: ', data);
-        let newMessages = this.state.messages.concat([data]);
-        this.setState({messages: newMessages});
+        if(data.type === 'clientCount') {
+          let usersOnline = data.usersOnline;
+          this.setState({clientsOnline: usersOnline});
+        } else {
+          let newMessages = this.state.messages.concat([data]);
+          this.setState({messages: newMessages});
+        }
       }
     }
     this.socket.onclose = (event) => {
@@ -72,6 +76,7 @@ class App extends Component {
       <div className="wrapper">
         <nav>
           <h1>CHATTY</h1>
+          <p>{this.state.clientsOnline} Users Online</p>
         </nav>
 
         <MessageList messages    ={this.state.messages}/>
