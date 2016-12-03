@@ -12,6 +12,7 @@ class App extends Component {
           name: null
         },
         messages: [],
+        clientsOnline: null
     };
   }
 
@@ -21,18 +22,22 @@ class App extends Component {
     console.log('Connected to server');
 
     this.socket.onopen = (event) => {
-      this.addClient();
+      this.clientAction();
+
       this.socket.onmessage = (event) => {
-        let message = JSON.parse(event.data);
-        console.log('Event: ', event);
-        console.log('message: ', message);
-        let newMessages = this.state.messages.concat([message]);
+        let data = JSON.parse(event.data);
+        // let clientCount = ;
+        console.log('data: ', data);
+        let newMessages = this.state.messages.concat([data]);
         this.setState({messages: newMessages});
       }
     }
+    this.socket.onclose = (event) => {
+      this.clientAction();
+    }
   }
 
-  addClient() {
+  clientAction() {
     this.sendText('clientConnect', null, null);
   }
 
@@ -59,6 +64,7 @@ class App extends Component {
       }
     this.socket.send(JSON.stringify(msg));
     console.log('Message sent: ', content);
+    console.log('Message type: ', type);
   }
 
   render() {
