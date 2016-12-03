@@ -23,7 +23,6 @@ wss.on('connection', (ws) => {
 
   ws.on('message', ((msg) => {
     let message = JSON.parse(msg);
-    console.log('Incoming: ', message);
     let newMessage = {};
     if(message.type === 'postMessage') {
       newMessage = {

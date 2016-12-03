@@ -28,6 +28,7 @@ html, body {
     }
     #message-list {
       height: calc(100vh - 131px);
+      overflow: scroll;
       padding: 16px 8px;
     }
     #message-list .message {
@@ -42,7 +43,6 @@ html, body {
       flex: 15;
       font-weight: 700;
       margin-right: 16px;
-      overflow: hidden;
     }
     #message-list .message .content {
       flex: 85;

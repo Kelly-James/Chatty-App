@@ -9,10 +9,10 @@ class App extends Component {
     super(props);
     this.state = {
         currentUser: {
-          name: null
+          name: ''
         },
         messages: [],
-        clientsOnline: null
+        clientsOnline: ''
     };
   }
 
@@ -26,7 +26,6 @@ class App extends Component {
 
       this.socket.onmessage = (event) => {
         let data = JSON.parse(event.data);
-        console.log('data: ', data);
         if(data.type === 'clientCount') {
           let usersOnline = data.usersOnline;
           this.setState({clientsOnline: usersOnline});
@@ -67,8 +66,6 @@ class App extends Component {
         content
       }
     this.socket.send(JSON.stringify(msg));
-    console.log('Message sent: ', content);
-    console.log('Message type: ', type);
   }
 
   render() {
