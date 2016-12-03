@@ -16,16 +16,24 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.socket = new WebSocket('ws://localhost:4000')
+    this.socket = new WebSocket('ws://localhost:4000');
+
     console.log('Connected to server');
 
-    this.socket.onmessage = (event) => {
-      let message = JSON.parse(event.data);
-      
-      console.log('message: ', message);
-      let newMessages = this.state.messages.concat([message]);
-      this.setState({messages: newMessages});
+    this.socket.onopen = (event) => {
+      this.addClient();
+      this.socket.onmessage = (event) => {
+        let message = JSON.parse(event.data);
+        console.log('Event: ', event);
+        console.log('message: ', message);
+        let newMessages = this.state.messages.concat([message]);
+        this.setState({messages: newMessages});
+      }
     }
+  }
+
+  addClient() {
+    this.sendText('clientConnect', null, null);
   }
 
   addMessage(content) {
